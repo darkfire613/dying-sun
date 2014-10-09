@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "cleanup.h"
 
 int main(int argc, char* argv[])
 {
@@ -30,8 +31,7 @@ int main(int argc, char* argv[])
   SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
   if (bmp == nullptr)
   {
-    SDL_DestroyRenderer(ren);
-    SDL_DestroyWindow(win);
+    cleanup(ren, win);
     std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
     SDL_Quit();
     return 1;
@@ -41,8 +41,7 @@ int main(int argc, char* argv[])
   SDL_FreeSurface(bmp);
   if (tex == nullptr)
   {
-    SDL_DestroyRenderer(ren);
-    SDL_DestroyWindow(win);
+    cleanup(ren, win);
     std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
     SDL_Quit();
     return 1;
@@ -54,9 +53,7 @@ int main(int argc, char* argv[])
 
   SDL_Delay (2000);
 
-  SDL_DestroyTexture(tex);
-  SDL_DestroyRenderer(ren);
-  SDL_DestroyWindow(win);
+  cleanup(tex, ren, win);
 
   SDL_Quit();
 
