@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
   {
     SDL_DestroyWindow(win);
     std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-    SDL_Quit()
+    SDL_Quit();
     return 1;
   }
 
@@ -36,6 +36,28 @@ int main(int argc, char* argv[])
     SDL_Quit();
     return 1;
   }
+
+  SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
+  SDL_FreeSurface(bmp);
+  if (tex == nullptr)
+  {
+    SDL_DestroyRenderer(ren);
+    SDL_DestroyWindow(win);
+    std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+    SDL_Quit();
+    return 1;
+  }
+
+  SDL_RenderClear(ren);
+  SDL_RenderCopy(ren, tex, NULL, NULL);
+  SDL_RenderPresent(ren);
+
+  SDL_Delay (2000);
+
+  SDL_DestroyTexture(tex);
+  SDL_DestroyRenderer(ren);
+  SDL_DestroyWindow(win);
+
   SDL_Quit();
 
   return 0;
