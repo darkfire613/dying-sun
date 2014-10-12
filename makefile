@@ -5,7 +5,7 @@ CXX = g++
 SDL = -framework SDL2
 CXXFLAGS = -Wall -c -std=c++11
 LDFLAGS = $(SDL)
-EXE = Lesson1
+EXE = Lesson
 
 all: $(EXE)
 
